@@ -26,7 +26,7 @@ class isBrowser_Filter {
         setcookie( $test_string, hash( 'sha512', uniqid( time() ) ), time() - 999999, "/", $cookiedomain );
         $_SESSION[ "browser-test-" . $browser_hash ] = $test_string;
         #$output = self::clear_session();  
-        #session_write_close();
+        session_write_close();
       
         return true;
     }
