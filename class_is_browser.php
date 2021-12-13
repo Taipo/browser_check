@@ -28,7 +28,9 @@ class isBrowser_Filter {
 		}
 		$test_string = hash( 'sha512', uniqid( time() ) );
 		# set an expired cookie
-		setcookie( $test_string, hash( 'sha512', self::kakano_tupokanoa() . uniqid( time() ) ), time() - rand( 900000, 999999 ), "/", $cookiedomain );
+		# hashes of uniqid( time() ) are not particularly unique so we prepend some pseudo random numbers
+		# because, why not...
+		setcookie( $test_string, hash( 'sha512', hash( 'sha512', self::kakano_tupokanoa() ) . uniqid( time() ) ), time() - rand( 900000, 999999 ), "/", $cookiedomain );
 		$_SESSION[ "browser-test-" . $browser_hash ] = $test_string;
 		#$output = self::clear_session();  
 		session_write_close();
@@ -47,7 +49,7 @@ class isBrowser_Filter {
 		if ( false !== $whakatote ) {
 			$pepa = base64_encode( random_bytes( 64 ) );
 		}
-		return hash( $momo_haatepe, hash_pbkdf2( $momo_haatepe, $taauru, ( ( false !== $whakatote ) ? $pepa : NULL ), 24576, 96, true ) );
+		return hash( $momo_haatepe, hash_pbkdf2( $momo_haatepe, $taauru, ( ( false !== $whakatote ) ? $pepa : NULL ), 16384, 96, true ) );
 	}
 	public static function momo_aho( $momo_aho ) {
 		if ( is_int( $momo_aho ) ) {
@@ -116,7 +118,7 @@ class isBrowser_Filter {
 		// format: algorithm:iterations:salt:hash
 		if ( false !== $withSalt )
 			$salt = base64_encode( random_bytes( 24 ) );
-		return hash( $hashtype, hash_pbkdf2( $hashtype, $input, ( ( false !== $withSalt ) ? $salt : NULL ), 4096, 96 ) );
+		return hash( $hashtype, hash_pbkdf2( $hashtype, $input, ( ( false !== $withSalt ) ? $salt : NULL ), 16384, 96 ) );
 	}
 	public static function get_hash_type( $sType ) {
 		foreach ( hash_algos() as $key => $val ) {
