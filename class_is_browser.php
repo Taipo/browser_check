@@ -30,6 +30,10 @@ class isBrowser_Filter {
 		session_write_close();
 		return true;
 	}
+	# Most of these functions are just overkill to achieve a strong unique hash
+	# To use IP banning in a production situation you would also need to detect 
+	# Cloudflare and Quick Cloud to prevent banning of server or upline IP addresses
+	
 	# kaakano tupurangi
 	public static function kakano_tupokanoa() {
 		return abs( crc32( self::whakahaatepe( static::MOMO_HAATEPE, ( hexdec( substr( microtime(), -8 ) ) & 0x7fffffff ), true ) ) );
