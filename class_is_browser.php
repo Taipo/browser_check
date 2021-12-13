@@ -2,7 +2,7 @@
 class isBrowser_Filter {
     const MOMO_HAATEPE = 'sha3-512';
     const TAUROA = 'add_random_hash';
-    const HASH_TYPE = 9;
+    const HASH_TYPE = 9; // sha512
     const SESS_TIME = 3600;
     
     public static function browser_check( $ip = '' ): bool {
