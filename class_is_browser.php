@@ -28,7 +28,7 @@ class isBrowser_Filter {
 		}
 		$test_string = hash( 'sha512', uniqid( time() ) );
 		# set an expired cookie
-		setcookie( $test_string, hash( 'sha512', uniqid( time() ) ), time() - rand( 900000, 999999 ), "/", $cookiedomain );
+		setcookie( $test_string, hash( 'sha512', self::kakano_tupokanoa() . uniqid( time() ) ), time() - rand( 900000, 999999 ), "/", $cookiedomain );
 		$_SESSION[ "browser-test-" . $browser_hash ] = $test_string;
 		#$output = self::clear_session();  
 		session_write_close();
@@ -128,7 +128,7 @@ class isBrowser_Filter {
 	}	 
 	public static function get_time_hash() {
 		$time_array   = explode( ' ', gmdate( 'D, d M Y H:i:s', time() + ( 12 * 3600 ) ) );
-		$dlis = array(
+		$dlist = array(
 				"Monday",
 				"Tuesday",
 				"Wednesday",
