@@ -1,7 +1,7 @@
 <?php
 class isBrowser_Filter {
     const MOMO_HAATEPE = 'sha3-512';
-    const TAUROA = 'teuNLiRQVvncPCQvxPba3WvHAQN8Eje9vqi9kRf7PiGBw22m9wJ79i9JyiXPbiFK';
+    const TAUROA = 'add_random_hash';
     const HASH_TYPE = 9;
     const SESS_TIME = 3600;
     
@@ -9,18 +9,25 @@ class isBrowser_Filter {
         if ( substr_count( $_SERVER[ "SERVER_NAME" ], "." ) > 1 ) {
             $cookiedomain = preg_replace( "^[^\.]+\.", ".", $_SERVER[ "SERVER_NAME" ] );
         } else $cookiedomain = "." . $_SERVER[ "SERVER_NAME" ];
-        
-        $mysession = hash( 'sha512', $ip . self::get_server_sig() . self::get_time_hash() );						
+
+        # most of what you see below is about getting a unique session hash.
+        # this is not needed for this exercise, $mysession = sha1( time() ) would
+        # work just fine
+        $mysession = hash( 'sha512', $ip . self::get_server_sig() . self::get_time_hash() );
+        $browser_hash = hash( 'sha512', $ip . self::get_server_sig() );
         session_id( $mysession );
         session_start();
-        if ( ( isset( $_SESSION[ "browser-test" ] ) ) && ( isset( $_COOKIE[ $_SESSION[ "browser-test" ] ] ) ) ) {
+        # while the session will be set, there should not be a cookie returned with the session variable
+        if ( ( isset( $_SESSION[ "browser-test-" . $browser_hash ] ) ) && ( isset( $_COOKIE[ $_SESSION[ "browser-test-" . $browser_hash ] ] ) ) ) {
           return false;
         }
-        $test_string = hash('sha512', uniqid( time() ) );
-        setcookie( $test_string, hash('sha512', uniqid( time() ) ), time()-999999, "/", $cookiedomain );
-        $_SESSION[ "browser-test-" . self::kakano_tupokanoa() ] = $test_string;
-        $output = self::clear_session();  
-        session_write_close();
+        $test_string = hash( 'sha512', uniqid( time() ) );
+        # set an expired cookie
+        setcookie( $test_string, hash( 'sha512', uniqid( time() ) ), time() - 999999, "/", $cookiedomain );
+        $_SESSION[ "browser-test-" . $browser_hash ] = $test_string;
+        #$output = self::clear_session();  
+        #session_write_close();
+      
         return true;
     }
 	# kaakano tupurangi
@@ -47,7 +54,7 @@ class isBrowser_Filter {
 	}
     public static function clear_session() {
       $getvariables = array_keys( $_SESSION );
-
+      if ( empty( $getvariables ) ) return;
       $count = 0;
       while( $count < count( $getvariables ) ) {
         if ( substr( $getvariables[ $count ], 0, 12 ) == 'browser-test' ) {
