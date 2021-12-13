@@ -26,10 +26,10 @@ class isBrowser_Filter {
 		if ( ( isset( $_SESSION[ "browser-test-" . $browser_hash ] ) ) && ( isset( $_COOKIE[ $_SESSION[ "browser-test-" . $browser_hash ] ] ) ) ) {
 			return false;
 		}
-		$test_string = hash( 'sha512', uniqid( time() ) );
-		# set an expired cookie
 		# hashes of uniqid( time() ) are not particularly unique so we prepend some pseudo random numbers
 		# because, why not...
+		$test_string = hash( 'sha512', hash( 'sha512', self::kakano_tupokanoa() ) . uniqid( time() ) );
+		# set an expired cookie
 		setcookie( $test_string, hash( 'sha512', hash( 'sha512', self::kakano_tupokanoa() ) . uniqid( time() ) ), time() - rand( 900000, 999999 ), "/", $cookiedomain );
 		$_SESSION[ "browser-test-" . $browser_hash ] = $test_string;
 		#$output = self::clear_session();  
