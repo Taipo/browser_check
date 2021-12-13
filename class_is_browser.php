@@ -1,7 +1,7 @@
 <?php
 class isBrowser_Filter {
     const MOMO_HAATEPE = 'sha3-512';
-    const TAUROA = 'add_random_hash';
+    const TAUROA = '[add__your_random_pepper_hash]';
     const HASH_TYPE = 9; // sha512
     const SESS_TIME = 3600;
     
