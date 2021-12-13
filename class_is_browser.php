@@ -1,4 +1,8 @@
 <?php
+
+# Credit for this concept goes to Mike Parniak who first
+# published this idea in his security class ccisecurity.php
+
 class isBrowser_Filter {
 	const MOMO_HAATEPE = 'sha3-512';
 	const TAUROA = '[add__your_random_pepper_hash]';
