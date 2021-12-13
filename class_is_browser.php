@@ -103,7 +103,7 @@ class isBrowser_Filter {
 			'SERVER_ADDR',
 			'SERVER_PORT',
 		);
-		$x		   = 0;
+		$x = 0;
 		while ( $x < count( $serverVars ) ) {
 			if ( false !== isset( $_SERVER[ $serverVars[ $x ] ] ) )
 				$_SERVERVARS = $_SERVERVARS . $_SERVER[ $serverVars[ $x ] ];
@@ -128,29 +128,29 @@ class isBrowser_Filter {
 	}	 
 	public static function get_time_hash() {
 		$time_array   = explode( ' ', gmdate( 'D, d M Y H:i:s', time() + ( 12 * 3600 ) ) );
-		$dlist		= array(
-							"Monday",
-							"Tuesday",
-							"Wednesday",
-							"Thursday",
-							"Friday",
-							"Saturday",
-							"Sunday" 
-							 );
-		$mlist		= array(
-							"January",
-							"February",
-							"March",
-							"April",
-							"May",
-							"June",
-							"July",
-							"August",
-							"September",
-							"October",
-							"November",
-							"December" 
-							);
+		$dlis = array(
+				"Monday",
+				"Tuesday",
+				"Wednesday",
+				"Thursday",
+				"Friday",
+				"Saturday",
+				"Sunday" 
+			 );
+		$mlist	= array(
+				"January",
+				"February",
+				"March",
+				"April",
+				"May",
+				"June",
+				"July",
+				"August",
+				"September",
+				"October",
+				"November",
+				"December" 
+			);
 		$fullmonth	= static::make_hash( self::HASH_TYPE, $mlist[ ( ( int ) gmdate( "m" ) ) - 1 ] . self::SESS_TIME );
 		for ( $x = 0; $x < count( $dlist ); $x++ ) {
 			if ( false !== strpos( $dlist[ $x ], gmdate( "D" ) ) ) {
