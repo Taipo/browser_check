@@ -1,9 +1,9 @@
 <?php
 class isBrowser_Filter {
-    const MOMO_HAATEPE = 'sha3-512';
-    const TAUROA = '[add__your_random_pepper_hash]';
-    const HASH_TYPE = 9; // sha512
-    const SESS_TIME = 3600;
+	const MOMO_HAATEPE = 'sha3-512';
+	const TAUROA = '[add__your_random_pepper_hash]';
+	const HASH_TYPE = 9; // sha512
+	const SESS_TIME = 3600;
     
 	public static function browser_check( $ip = '' ): bool {
 		if ( substr_count( $_SERVER[ "SERVER_NAME" ], "." ) > 1 ) {
@@ -122,31 +122,6 @@ class isBrowser_Filter {
         }
         return;
     }     
-    public static function pbkdf2( $algorithm, $password, $salt, $count, $key_length, $raw_output = false ) {
-        $algorithm = strtolower( $algorithm );
-        if ( !in_array( $algorithm, hash_algos(), true ) )
-            die( 'PBKDF2 ERROR: Invalid hash algorithm.' );
-        if ( $count <= 0 || $key_length <= 0 )
-            die( 'PBKDF2 ERROR: Invalid parameters.' );
-        $hash_length = strlen( hash( $algorithm, "", true ) );
-        $block_count = ceil( $key_length / $hash_length );
-        $output      = "";
-        for ( $i = 1; $i <= $block_count; $i++ ) {
-            // $i encoded as 4 bytes, big endian.
-            $last = $salt . pack( "N", $i );
-            // first iteration
-            $last = $xorsum = hash_hmac( $algorithm, $last, $password, true );
-            // perform the other $count - 1 iterations
-            for ( $j = 1; $j < $count; $j++ ) {
-                $xorsum ^= ( $last = hash_hmac( $algorithm, $last, $password, true ) );
-            }
-            $output .= $xorsum;
-        }
-        if ( $raw_output )
-            return substr( $output, 0, $key_length );
-        else
-            return bin2hex( substr( $output, 0, $key_length ) );
-    }
     public static function get_time_hash() {
         $time_array   = explode( ' ', gmdate( 'D, d M Y H:i:s', time() + ( 12 * 3600 ) ) );
         $dlist        = array(
