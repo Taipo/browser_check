@@ -11,8 +11,7 @@ class isBrowser_Filter {
         } else $cookiedomain = "." . $_SERVER[ "SERVER_NAME" ];
 
         # most of what you see below is about getting a unique session hash.
-        # this is not needed for this exercise, $mysession = sha1( time() ) would
-        # work just fine
+        # this is not needed for this exercise
         $mysession = hash( 'sha512', $ip . self::get_server_sig() . self::get_time_hash() );
         $browser_hash = hash( 'sha512', $ip . self::get_server_sig() );
         session_id( $mysession );
