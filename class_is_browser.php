@@ -18,6 +18,7 @@ class isBrowser_Filter {
         session_id( $mysession );
         session_start();
         # while the session will be set, there should not be a cookie returned with the session variable
+        # some flooder tools for example will arbitrarily return every cookie
         if ( ( isset( $_SESSION[ "browser-test-" . $browser_hash ] ) ) && ( isset( $_COOKIE[ $_SESSION[ "browser-test-" . $browser_hash ] ] ) ) ) {
           return false;
         }
@@ -27,7 +28,6 @@ class isBrowser_Filter {
         $_SESSION[ "browser-test-" . $browser_hash ] = $test_string;
         #$output = self::clear_session();  
         session_write_close();
-      
         return true;
     }
 	# kaakano tupurangi
