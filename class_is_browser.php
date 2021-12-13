@@ -18,7 +18,7 @@ class isBrowser_Filter {
         session_id( $mysession );
         session_start();
         # while the session will be set, there should not be a cookie returned with the session variable
-        # some flooder tools for example will arbitrarily return every cookie
+        # some flooder tools for example will arbitrarily return every cookie sent in the http header
         if ( ( isset( $_SESSION[ "browser-test-" . $browser_hash ] ) ) && ( isset( $_COOKIE[ $_SESSION[ "browser-test-" . $browser_hash ] ] ) ) ) {
           return false;
         }
